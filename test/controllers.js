@@ -1,30 +1,26 @@
 var fs = require('fs')
-  , httpMocks = require('node-mocks-http')
+  , request = require('supertest')
+  , express = require('express')
   , chai = require('chai')
   , should = chai.should()
-  , upload = require('../controllers').upload
+  , uploadRouter = require('../routes')
   , things = chai.use(require('chai-things'))
-  , req
-  , res
+  , cat = fs.readFileSync(__dirname + '/fixtures/cat.jpg')
+  , dog = fs.readFileSync(__dirname + '/fixtures/dog.jpg')
+  , app
+
 
 describe('POST /upload', function(){
   beforeEach(function(done){
-    req = httpMocks.createRequest()
-    res = httpMocks.createResponse()
-
-    req.files = [ { buffer: fs.readFileSync(__dirname + '/fixtures/cat.jpg') } 
-                , { buffer: fs.readFileSync(__dirname + '/fixtures/dog.jpg') }
-                ]
+    app = express()
+    app.use('/', uploadRouter)
     done()
   })
-  it('an unauthorized request should fail with a 403', function(done){
-    upload(req, res)
-    setTimeout(function(){
-      var data = res._getData()
-      console.log('Data', data)
-      data.should.be.instanceof(Array)
-      data.should.all.have.property('url', 'agconti.com')
-      done()
-    }, 100)
+  it('a valid request should return the uploaded urls', function(done){
+    request(app)
+      .post('/upload')
+      .attach('dog', dog)
+      .attach('cat', cat)
+      .expect(200, done)
   })
 })
