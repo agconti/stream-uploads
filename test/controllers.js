@@ -1,7 +1,9 @@
 var fs = require('fs')
   , httpMocks = require('node-mocks-http')
-  , should = require('chai').should()
+  , chai = require('chai')
+  , should = chai.should()
   , upload = require('../controllers').upload
+  , things = chai.use(require('chai-things'))
   , req
   , res
 
@@ -17,9 +19,12 @@ describe('POST /upload', function(){
   })
   it('an unauthorized request should fail with a 403', function(done){
     upload(req, res)
-    var data = res._getData()
-    console.log('Data', data)
-    should.exist(data.urls)
-    done()
+    setTimeout(function(){
+      var data = res._getData()
+      console.log('Data', data)
+      data.should.be.instanceof(Array)
+      data.should.all.have.property('url', 'agconti.com')
+      done()
+    }, 100)
   })
 })
