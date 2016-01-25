@@ -2,12 +2,11 @@
 
 const uploadsRouter = require('express').Router()
 const upload = require('./controllers').upload
-const multer = require('multer')
-const storage = multer.memoryStorage()
+const uploadHandler = require('./middleware').uploadHandler
 
 
 uploadsRouter
-    .use(multer({storage}).array())
-    .post('/upload', upload)
+	.use(uploadHandler)
+	.post('/upload', upload)
 
 module.exports = uploadsRouter
