@@ -1,14 +1,14 @@
-var uploadsRouter = require('express').Router()
-  , upload = require('./controllers').upload
-  , multer = require('multer')
-  , multerConfig = {
-      inMemory: true
-    , putSingleFilesInArray: true
-    }
+'use strict'
 
-    
+const uploadsRouter = require('express').Router()
+const upload = require('./controllers').upload
+const multer = require('multer')
+const storage = multer.memoryStorage()
+const uploadMiddleware = multer({storage})
+
+
 uploadsRouter
-    .use(multer(multerConfig))
+    .use(multer({storage}).array())
     .post('/upload', upload)
 
 module.exports = uploadsRouter
