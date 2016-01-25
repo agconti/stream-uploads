@@ -17,8 +17,6 @@
     "multer": "^1.1.0",
     "node-mocks-http": "^1.5.1",
     "node-uuid": "^1.4.7",
-    "s3-upload-stream": "^1.0.7",
-    "streamifier": "^0.1.1",
     "supertest": "^1.1.0"
   },
   "devDependencies": {
