@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Stream-uploads by agconti</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Stream-uploads</h1>
+      <h2 class="project-tagline">A node.js package that allows you to easily stream uploads to s3</h2>
+      <a href="https://github.com/agconti/stream-uploads" class="btn">View on GitHub</a>
+      <a href="https://github.com/agconti/stream-uploads/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/agconti/stream-uploads/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="stream-uploads" class="anchor" href="#stream-uploads" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>stream-uploads</h1>
+
+<p><a href="https://travis-ci.org/agconti/stream-uploads"><img src="https://travis-ci.org/agconti/stream-uploads.svg?branch=master" alt="Build Status"></a>
+<a href="http://badge.fury.io/js/stream-uploads"><img src="https://badge.fury.io/js/stream-uploads.svg" alt="npm version"></a></p>
+
+<p>A node.js package that allows you to easily stream uploads to s3</p>
+
+<h2>
+<a id="install" class="anchor" href="#install" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Install</h2>
+
+<div class="highlight highlight-source-shell"><pre>npm install stream-uploads</pre></div>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage</h2>
+
+<p>Simply attach the provided router and start accpeting streaming uploads at <code>'/uploads'</code></p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">const</span> <span class="pl-c1">app</span> <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">'</span>express<span class="pl-pds">'</span></span>)()
+<span class="pl-k">const</span> <span class="pl-c1">streamingUploadsRouter</span> <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">'</span>./routes<span class="pl-pds">'</span></span>)
+
+<span class="pl-smi">app</span>.<span class="pl-en">use</span>(streamingUploadsRouter)
+
+<span class="pl-smi">app</span>.<span class="pl-en">listen</span>(<span class="pl-c1">3000</span>)</pre></div>
+
+<p>Or make your own custom implementation using the <code>uploadHandeler</code> middleware:</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">const</span> <span class="pl-c1">express</span> <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">'</span>express<span class="pl-pds">'</span></span>)
+<span class="pl-k">const</span> <span class="pl-c1">app</span> <span class="pl-k">=</span> <span class="pl-en">express</span>()
+<span class="pl-k">const</span> <span class="pl-c1">uploadHandler</span> <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">'</span>stream-uploads<span class="pl-pds">'</span></span>).<span class="pl-smi">uploadHandler</span>
+<span class="pl-k">const</span> <span class="pl-c1">async</span> <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">'</span>async<span class="pl-pds">'</span></span>)
+
+
+<span class="pl-smi">app</span>.<span class="pl-en">post</span>(<span class="pl-s"><span class="pl-pds">'</span>/upload<span class="pl-pds">'</span></span>, uploadHandler, (<span class="pl-smi">req</span>, <span class="pl-smi">res</span>) <span class="pl-k">=&gt;</span> {
+
+    <span class="pl-c">// Do stuff here ...</span>
+
+}</pre></div>
+
+<h3>
+<a id="uploadhandeler" class="anchor" href="#uploadhandeler" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>uploadHandeler</h3>
+
+<h5>
+<a id="an-expressjs-route-middleware-that-reports-errors-of-attempted-uploads-to-s3-to-the-client" class="anchor" href="#an-expressjs-route-middleware-that-reports-errors-of-attempted-uploads-to-s3-to-the-client" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>An Express.js route middleware that reports errors of attempted uploads to s3 to the client.</h5>
+
+<ul>
+<li>
+<a href="https://github.com/param" class="user-mention">@param</a> {object} err -- uploading file error</li>
+<li>
+<a href="https://github.com/param" class="user-mention">@param</a> {object} req</li>
+<li>
+<a href="https://github.com/param" class="user-mention">@param</a> {object} res</li>
+<li>
+<a href="https://github.com/param" class="user-mention">@param</a> {function} next</li>
+</ul>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/agconti/stream-uploads">Stream-uploads</a> is maintained by <a href="https://github.com/agconti">agconti</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
