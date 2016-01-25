@@ -34,13 +34,15 @@ const async = require('async')
 app.post('/upload', uploadHandler, (req, res) => {
 
 	// Do stuff here ...
-	
+
 }
 ```
 
 
 ### uploadHandeler
-####  Allows uploading to s3 via a stream.
- * @param {object} file -- expects a req.files file from multer or busboy
- * @param {function} callback
- * @return {object} -- s3Stream with unique key name
+#### An Express.js route middleware that reports errors of attempted uploads to s3
+* to the client.
+* @param {object} err -- uploading file error
+* @param {object} req
+* @param {object} res
+* @param {function} next
