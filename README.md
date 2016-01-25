@@ -40,8 +40,7 @@ app.post('/upload', uploadHandler, (req, res) => {
 
 
 ### uploadHandeler
-#### An Express.js route middleware that reports errors of attempted uploads to s3
-* to the client.
+##### An Express.js route middleware that reports errors of attempted uploads to s3 to the client.
 * @param {object} err -- uploading file error
 * @param {object} req
 * @param {object} res
