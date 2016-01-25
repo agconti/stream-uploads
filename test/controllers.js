@@ -1,22 +1,25 @@
-var fs = require('fs')
-  , request = require('supertest')
-  , express = require('express')
-  , chai = require('chai')
-  , should = chai.should()
-  , uploadRouter = require('../routes')
-  , things = chai.use(require('chai-things'))
-  , cat = fs.readFileSync(__dirname + '/fixtures/cat.jpg')
-  , dog = fs.readFileSync(__dirname + '/fixtures/dog.jpg')
-  , app
+'use strict'
+
+const fs = require('fs')
+const request = require('supertest')
+const express = require('express')
+const chai = require('chai')
+const should = chai.should()
+const uploadRouter = require('../routes')
+const things = chai.use(require('chai-things'))
+const cat = fs.readFileSync(__dirname + '/fixtures/cat.jpg')
+const dog = fs.readFileSync(__dirname + '/fixtures/dog.jpg')
+
+let app
 
 
-describe('POST /upload', function(){
-  beforeEach(function(done){
+describe('POST /upload', () => {
+  beforeEach( done => {
     app = express()
     app.use('/', uploadRouter)
     done()
   })
-  it('a valid request should return the uploaded urls', function(done){
+  it('a valid request should return the uploaded urls', done => {
     request(app)
       .post('/upload')
       .attach('dog', dog)
