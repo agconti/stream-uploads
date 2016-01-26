@@ -12,6 +12,11 @@ npm install stream-uploads
 
 ## Usage
 
+Configure your s3 bucket with:
+```js
+process.env.S3_BUCKET_NAME = 'your-bucket'
+```
+
 Simply attach the provided router and start accepting streaming uploads at `'/uploads'`:
 ```js
 const app = require('express')()
