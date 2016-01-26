@@ -48,7 +48,7 @@ exports.uploadErrorHandler = (err, req, res, next) => {
 }
 
 
-exports.multiPartFormDataParser = multer({storage}).array()
+exports.multiPartFormDataParser = multer({storage}).any()
 
 /**
  * The grouped middleware nessesary to upload files
