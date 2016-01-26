@@ -2,9 +2,10 @@
 
 const debug = require('debug')('uploads:middleware')
 const async = require('async')
-const upload = require('./lib/stream-uploads').upload
 const multer = require('multer')
 const storage = multer.memoryStorage()
+const upload = require('./lib/stream-uploads').upload
+const setUploadedUrls = require('./lib/setUploadedUrls')
 
 
 /**
@@ -23,7 +24,7 @@ let uploadMiddleware = (req, res, next) => {
     }
     debug(`Uploaded urls: ${urls}`)
 
-		req.uploadedUrls = urls
+		req.body = setUploadedUrls(req.body, urls)
 		next()
   })
 }
