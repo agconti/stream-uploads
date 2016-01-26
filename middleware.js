@@ -15,14 +15,14 @@ const setUploadedUrls = require('./lib/setUploadedUrls')
  * @return {function} next
  */
 exports.uploadMiddleware = (req, res, next) => {
-	debug(`Files to be processed: ${req.files}`)
+	debug(`Files to be processed: ${JSON.stringify(req.files)}`)
 
 	async.map(req.files, upload, (err, urls) => {
     if (err) {
       debug(`Error processing files ${err}`)
       return next(err)
     }
-    debug(`Uploaded urls: ${urls}`)
+    debug(`Uploaded urls: ${JSON.stringify(urls)}`)
 
 		req.body = setUploadedUrls(req.body, urls)
 		next()
