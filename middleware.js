@@ -14,7 +14,7 @@ const setUploadedUrls = require('./lib/setUploadedUrls')
  * @param {object} res
  * @return {function} next
  */
-let uploadMiddleware = (req, res, next) => {
+exports.uploadMiddleware = (req, res, next) => {
 	debug(`Files to be processed: ${req.files}`)
 
 	async.map(req.files, upload, (err, urls) => {
@@ -38,7 +38,7 @@ let uploadMiddleware = (req, res, next) => {
  * @param {object} res
  * @param {function} next
  */
-let uploadErrorHandler = (err, req, res, next) => {
+exports.uploadErrorHandler = (err, req, res, next) => {
 	if (err) {
 		debug(`Sending error processing files to client ${err}`)
 		return res.status(400).send(err)
@@ -47,7 +47,13 @@ let uploadErrorHandler = (err, req, res, next) => {
 	next()
 }
 
-exports.uploadHandler = [ multer({storage}).array()
-												, uploadMiddleware
-												, uploadErrorHandler
+
+exports.multiPartFormDataParser = multer({storage}).array()
+
+/**
+ * The grouped middleware nessesary to upload files
+ */
+exports.uploadHandler = [ exports.multiPartFormDataParser
+												, exports.uploadMiddleware
+												, exports.uploadErrorHandler
 												]
