@@ -23,7 +23,7 @@ app.listen(3000)
 ```
 
 
-Or make your own custom implementation using the `uploadHandeler` middleware:
+Or make your own custom implementation using the `uploadHandler` middleware:
 ```js
 const express = require('express')
 const app = express()
@@ -38,7 +38,7 @@ app.post('/upload', uploadHandler, (req, res) => {
 ```
 
 
-### uploadHandeler
+### uploadHandler
 ##### A group of Express.js middleware that configures multer, uploads, and reports the errors of attempted uploads to s3 to the client.
 * @param {object} req
 * @param {object} res
