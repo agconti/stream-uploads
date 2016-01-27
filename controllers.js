@@ -1,6 +1,5 @@
 'use strict'
-
-const debug = require('debug')('uploads:controllers')
+const debug = require('debug')('stream-uploads:controllers')
 
 
 /**
@@ -9,8 +8,8 @@ const debug = require('debug')('uploads:controllers')
  * @param {object} res
  */
 exports.upload = (req, res) => {
-	let urls = req.uploadedUrls
-	debug(`Sending back file urls ${urls}`)
+	let urls = req.body
+	debug(`Sending back file urls`)
 
-  return res.status(200).send(urls)
+  return res.status(201).send(urls)
 }

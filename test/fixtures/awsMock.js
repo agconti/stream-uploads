@@ -1,112 +1,30 @@
-var expect = require('chai').expect
+'use strict'
+const chai = require('chai')
+const should = chai.should()
+const debug = require('debug')('stream-uploads:test:aws-mock')
 
-// Shamelessly plucked from the s3-upload-stream repo and exposed here
-// so we can use it in our own tests:
-// https://github.com/nathanpeck/s3-upload-stream/blob/master/tests/test.js
 
-// Define a stubbed out version of the AWS S3 Node.js client
-var AWSstub = {
-  S3: function () { 
-    this.createMultipartUpload = function (details, callback) {
-      // Make sure that this AWS function was called with the right parameters.
-      expect(details).to.have.property('Bucket')
-      expect(details.Key).to.be.a('string')
+class S3 {
+  upload(config, callback) {
+    debug('Using mocked S3 client')
 
-      expect(details).to.have.property('Key')
-      expect(details.Key).to.be.a('string')
+    config.should.have.property('Bucket')
+    config.Bucket.should.be.a('string')
 
-      if (details.Key == 'create-fail') {
-        // Trigger a simulated error when a magic file name is used.
-        callback('Simulated failure from mocked API')
-      }
-      else {
-        callback(null, {
-          UploadId: 'upload-id'
-        })
-      }
+    config.should.have.property('Key')
+    config.Key.should.be.a('string')
+
+    config.should.have.property('Body')
+    config.Body.should.be.a('buffer')
+
+    if (config.Key == 'create-fail') {
+      // Trigger a simulated error when a magic file name is used.
+      return callback(new Error('Simulated failure from mocked API'))
     }
 
-    this.uploadPart = function (details, callback) {
-      // Make sure that all the properties are there
-      expect(details).to.have.property('Body')
-      expect(details.Body).to.be.instanceof(Buffer)
-
-      expect(details).to.have.property('Bucket')
-      expect(details.Bucket).to.equal('test-bucket-name')
-
-      expect(details).to.have.property('Key')
-      expect(details.Key).to.be.a('string')
-
-      expect(details).to.have.property('UploadId')
-      expect(details.UploadId).to.contain('upload-id')
-
-      expect(details).to.have.property('PartNumber')
-      expect(details.PartNumber).to.be.an.integer
-
-      if (details.Key == 'upload-fail') {
-        callback('Simulated failure from mocked API')
-      }
-      else {
-        // Return an ETag
-        callback(null, {
-          ETag: 'etag'
-        })
-      }
-    }
-
-    this.abortMultipartUpload = function (details, callback) {
-      // Make sure that all the properties are there
-      expect(details).to.have.property('Bucket')
-      expect(details.Bucket).to.equal('test-bucket-name')
-
-      expect(details).to.have.property('Key')
-      expect(details.Key).to.be.a('string')
-
-      expect(details).to.have.property('UploadId')
-      expect(details.UploadId).to.contain('upload-id')
-
-      if (details.Key == 'abort-fail') {
-        // Trigger a simulated error when a magic file name is used.
-        callback('Simulated failure from mocked API')
-      }
-      else {
-        callback()
-      }
-    }
-
-    this.completeMultipartUpload = function (details, callback) {
-      // Make sure that all the properties are there
-      expect(details).to.have.property('Bucket')
-      expect(details.Bucket).to.equal('test-bucket-name')
-
-      expect(details).to.have.property('Key')
-      expect(details.Key).to.be.a('string')
-
-      expect(details).to.have.property('UploadId')
-      expect(details.UploadId).to.contain('upload-id')
-
-      expect(details).to.have.property('MultipartUpload')
-      expect(details.MultipartUpload).to.an.object
-
-      expect(details.MultipartUpload).to.have.property('Parts')
-      expect(details.MultipartUpload.Parts).to.an.array
-
-      details.MultipartUpload.Parts.forEach(function (partNumber) {
-        expect(partNumber).to.be.an.integer
-      })
-
-      if (details.Key == 'complete-fail' || details.Key == 'abort-fail') {
-        // Trigger a simulated error when a magic file name is used.
-        callback('Simulated failure from mocked API')
-      }
-      else {
-        callback(null, {
-          ETag: 'etag',
-          location: 'agconti.com'
-        })
-      }
-    }
+    callback(null, { Location: `http://example.com/${config.Key}` })
   }
 }
 
-module.exports = AWSstub
+
+module.exports = { S3 }

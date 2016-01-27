@@ -1,6 +1,5 @@
 'use strict'
-
-const debug = require('debug')('uploads:middleware')
+const debug = require('debug')('stream-uploads:middleware')
 const async = require('async')
 const multer = require('multer')
 const storage = multer.memoryStorage()
@@ -15,7 +14,7 @@ const setUploadedUrls = require('./lib/setUploadedUrls')
  * @return {function} next
  */
 exports.uploadMiddleware = (req, res, next) => {
-	debug(`Files to be processed: ${Object.keys(req.files)}`)
+	debug(`Files to be processed: ${req.files}`)
 
 	async.map(req.files, upload, (err, urls) => {
     if (err) {
@@ -40,7 +39,7 @@ exports.uploadMiddleware = (req, res, next) => {
  */
 exports.uploadErrorHandler = (err, req, res, next) => {
 	if (err) {
-		debug(`Sending error processing files to client`)
+		debug(`Sending error processing files to client ${err}`)
 		return res.status(400).send(err)
 	}
 
