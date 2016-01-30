@@ -35,6 +35,10 @@
 <h2>
 <a id="usage" class="anchor" href="#usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage</h2>
 
+<p>Configure your s3 bucket with:</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">process</span>.<span class="pl-smi">env</span>.<span class="pl-c1">S3_BUCKET_NAME</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>your-bucket<span class="pl-pds">'</span></span></pre></div>
+
 <p>Simply attach the provided router and start accepting streaming uploads at <code>'/uploads'</code>:</p>
 
 <div class="highlight highlight-source-js"><pre><span class="pl-k">const</span> <span class="pl-c1">app</span> <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">'</span>express<span class="pl-pds">'</span></span>)()
@@ -44,7 +48,7 @@
 
 <span class="pl-smi">app</span>.<span class="pl-en">listen</span>(<span class="pl-c1">3000</span>)</pre></div>
 
-<p>Or make your own custom implementation using the <code>uploadHandeler</code> middleware:</p>
+<p>Or make your own custom implementation using the <code>uploadHandler</code> middleware:</p>
 
 <div class="highlight highlight-source-js"><pre><span class="pl-k">const</span> <span class="pl-c1">express</span> <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">'</span>express<span class="pl-pds">'</span></span>)
 <span class="pl-k">const</span> <span class="pl-c1">app</span> <span class="pl-k">=</span> <span class="pl-en">express</span>()
@@ -58,7 +62,7 @@
 }</pre></div>
 
 <h3>
-<a id="uploadhandeler" class="anchor" href="#uploadhandeler" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>uploadHandeler</h3>
+<a id="uploadhandler" class="anchor" href="#uploadhandler" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>uploadHandler</h3>
 
 <h5>
 <a id="a-group-of-expressjs-middleware-that-configures-multer-uploads-and-reports-the-errors-of-attempted-uploads-to-s3-to-the-client" class="anchor" href="#a-group-of-expressjs-middleware-that-configures-multer-uploads-and-reports-the-errors-of-attempted-uploads-to-s3-to-the-client" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>A group of Express.js middleware that configures multer, uploads, and reports the errors of attempted uploads to s3 to the client.</h5>
