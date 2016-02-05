@@ -6,7 +6,7 @@ var expect = require('chai').expect
 
 // Define a stubbed out version of the AWS S3 Node.js client
 var AWSstub = {
-  S3: function () { 
+  S3: function () {
     this.createMultipartUpload = function (details, callback) {
       // Make sure that this AWS function was called with the right parameters.
       expect(details).to.have.property('Bucket')

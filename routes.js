@@ -6,7 +6,7 @@ const uploadHandler = require('./middleware').uploadHandler
 
 
 uploadsRouter
-	.use(uploadHandler)
-	.post('/upload', upload)
+  .use(uploadHandler)
+  .post('/upload', upload)
 
 module.exports = uploadsRouter

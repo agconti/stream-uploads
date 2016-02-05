@@ -37,7 +37,7 @@ const uploadHandler = require('stream-uploads').uploadHandler
 
 app.post('/upload', uploadHandler, (req, res) => {
 
-	// Do stuff here ...
+  // Do stuff here ...
 
 }
 ```
