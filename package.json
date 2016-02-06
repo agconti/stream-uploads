@@ -1,6 +1,6 @@
 {
   "name": "stream-uploads",
-  "version": "1.4.6",
+  "version": "1.4.7",
   "description": "A node.js package that allows you to easily stream uploads to s3",
   "main": "index.js",
   "directories": {
@@ -37,11 +37,24 @@
     "stream",
     "s3",
     "upload",
+    "aws",
     "amazon",
-    "files"
+    "stream",
+    "aws stream",
+    "aws s3 stream",
+    "aws s3",
+    "aws s3 streaming",
+    "aws s3 streaming upload",
+    "aws-sdk s3 streaming upload",
+    "aws s3 upload",
+    "s3 upload",
+    "s3 stream upload",
+    "s3 streaming",
+    "streaming upload",
+    "s3 streaming upload"
   ],
   "author": "Andrew Conti <andrew.g.conti@gmail.com> (http://agconti.com)",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/agconti/stream-uploads/issues"
   },
